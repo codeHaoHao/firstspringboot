@@ -11,5 +11,14 @@ public class Test {
 		
 		return "index";
 	}
-	
+	@RequestMapping("/sigin")
+	public String sigin() {
+		
+		return "signin";
+	}
+	@RequestMapping("/register")
+	public String register() {
+		
+		return "register";
+	}
 }
