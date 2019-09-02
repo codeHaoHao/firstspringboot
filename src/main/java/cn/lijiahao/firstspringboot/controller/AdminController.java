@@ -11,4 +11,8 @@ public class AdminController {
 		return "admin/index";
 	}
 	
+	@RequestMapping("/tables")
+	public String tables() {
+		return "admin/tables";
+	}
 }
