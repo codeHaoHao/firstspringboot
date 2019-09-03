@@ -1,6 +1,6 @@
-package cn.lijiahao.firstspringboot.dao;
+package cn.lijiahao.dao;
 
-import cn.lijiahao.firstspringboot.po.User;
+import cn.lijiahao.po.User;
 
 public interface UserDao {
 	int selectByPrimaryKey(int id);

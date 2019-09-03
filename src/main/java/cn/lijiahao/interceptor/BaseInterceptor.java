@@ -1,4 +1,4 @@
-package cn.lijiahao.springboot.interceptor;
+package cn.lijiahao.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,17 +12,18 @@ public class BaseInterceptor implements HandlerInterceptor{
 	@Autowired
 	private StringRedisTemplate stringRedisTemplate;
 	
+	
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		String sessionId = request.getSession().getId();
 		if (stringRedisTemplate.opsForHash().get(sessionId, "sessionId") != null
 				&& stringRedisTemplate.opsForHash().get(sessionId, "sessionId").equals(sessionId)) {
-			response.sendRedirect("/sigin");
+			
 			return true;
 		}else {
-			request.getRequestDispatcher(request.getContextPath()+"/sigin").forward(request, response);
-			
+			response.sendRedirect(request.getContextPath()+"/sigin");
 			return true;
 		}
 	}

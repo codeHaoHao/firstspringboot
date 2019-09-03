@@ -1,4 +1,4 @@
-package cn.lijiahao.firstspringboot.filter;
+package cn.lijiahao.filter;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
