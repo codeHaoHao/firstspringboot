@@ -1,4 +1,4 @@
-package cn.lijiahao.firstspringboot.interceptor;
+package cn.lijiahao.springboot.interceptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
