@@ -1,4 +1,4 @@
-package cn.lijiahao.firstspringboot.po;
+package cn.lijiahao.po;
 
 import java.sql.Timestamp;
 

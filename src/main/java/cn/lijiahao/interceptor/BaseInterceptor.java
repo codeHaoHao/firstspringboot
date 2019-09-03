@@ -1,4 +1,4 @@
-package cn.lijiahao.firstspringboot.interceptor;
+package cn.lijiahao.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

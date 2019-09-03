@@ -1,4 +1,4 @@
-package cn.lijiahao.firstspringboot.po;
+package cn.lijiahao.po;
 
 public class Permission extends BaseBean {
 	private static final long serialVersionUID = 6399858600085049390L;
