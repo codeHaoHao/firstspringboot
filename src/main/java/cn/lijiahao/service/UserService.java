@@ -1,10 +1,8 @@
-package cn.lijiahao.dao;
-
-import org.springframework.stereotype.Repository;
+package cn.lijiahao.service;
 
 import cn.lijiahao.po.User;
-@Repository
-public interface UserDao {
+
+public interface UserService {
 	User selectByUser(User user);
 	User selectByPrimaryKey(int id);
 	int update(User user);
