@@ -1,9 +1,9 @@
 package cn.lijiahao.dao;
 
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 import cn.lijiahao.po.User;
-@Repository
+@Mapper
 public interface UserDao {
 	User selectByUser(User user);
 	User selectByPrimaryKey(int id);

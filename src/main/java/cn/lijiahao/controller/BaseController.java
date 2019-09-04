@@ -32,6 +32,7 @@ public class BaseController {
 			json.setMessage(JsonMessage.USERNAME_IS_NOT_EXIST);
 			return json;
 		}
+		json.addDatas("user",user);
 		return json;
 	}
 	

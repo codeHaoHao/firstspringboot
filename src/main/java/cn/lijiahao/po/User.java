@@ -102,7 +102,7 @@ public class User extends BaseBean{
 	public void setIndividualResume(String individualResume) {
 		this.individualResume = individualResume;
 	}
-	public boolean isLocked() {
+	public boolean typeOfLocked() {
 		return this.locked=='1'?true:false;
 	}
 }

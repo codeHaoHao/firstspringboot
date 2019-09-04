@@ -12,11 +12,11 @@ public class JsonResult implements Serializable{
 	
 	private Map<String, Object> datas = new HashMap<String, Object>();
 	private String message;
-	private boolean success;
+	private boolean success = true;
 	private String code;
 	
 	public JsonResult() {
-		super();
+		
 	}
 	public JsonResult(Map<String, Object> map, String message, boolean success, String code) {
 		super();
