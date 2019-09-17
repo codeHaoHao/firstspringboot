@@ -1,11 +1,14 @@
 package cn.lijiahao.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+	
 	@RequestMapping("/index")
 	public String admin() {
 		return "admin/index";
@@ -15,4 +18,5 @@ public class AdminController {
 	public String tables() {
 		return "admin/tables";
 	}
+	
 }

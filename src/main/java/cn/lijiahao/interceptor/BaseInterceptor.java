@@ -18,12 +18,13 @@ public class BaseInterceptor implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		String sessionId = request.getSession().getId();
+		System.out.println(sessionId);
 		if (stringRedisTemplate.opsForHash().get(sessionId, "sessionId") != null
 				&& stringRedisTemplate.opsForHash().get(sessionId, "sessionId").equals(sessionId)) {
 			
 			return true;
 		}else {
-			response.sendRedirect(request.getContextPath()+"/sigin");
+			response.sendRedirect(request.getContextPath()+"/login");
 			return true;
 		}
 	}
