@@ -9,6 +9,7 @@ public class User extends BaseBean{
 	private String username;
 	private String password;
 	private String name;
+	private char[] phoneNum;
 	private Timestamp dataOfBirth;
 	private int age;
 	private char gender;
@@ -21,13 +22,14 @@ public class User extends BaseBean{
 	public User() {
 		super();
 	}
-	public User(int id, String username, String password, String name, Timestamp dataOfBirth, int age, char gender,
-			String salt, char locked, String avatar, String individualResume) {
+	public User(int id, String username, String password, String name, char[] phoneNum, Timestamp dataOfBirth, int age,
+			char gender, String salt, char locked, String avatar, String individualResume) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.name = name;
+		this.phoneNum = phoneNum;
 		this.dataOfBirth = dataOfBirth;
 		this.age = age;
 		this.gender = gender;
@@ -105,4 +107,11 @@ public class User extends BaseBean{
 	public boolean typeOfLocked() {
 		return this.locked=='1'?true:false;
 	}
+	public char[] getPhoneNum() {
+		return phoneNum;
+	}
+	public void setPhoneNum(char[] phoneNum) {
+		this.phoneNum = phoneNum;
+	}
+	
 }
