@@ -7,6 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+/**
+ * 基础拦截器，该拦截器主要用于管理sessionId
+ * @author franky
+ *
+ */
 @Component
 public class BaseInterceptor implements HandlerInterceptor{
 	@Autowired

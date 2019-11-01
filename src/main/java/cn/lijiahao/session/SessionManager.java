@@ -7,14 +7,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class SessionManager {
 	@Autowired
-	private static StringRedisTemplate stringRedisTemplate;
+	private StringRedisTemplate stringRedisTemplate;
 	
 	
-	public static String getSessionId(String sessionId) {
+	public String getSessionId(String sessionId) {
 		return (String) stringRedisTemplate.opsForHash().get(sessionId, "sessionId");
 	}
 	
-	public static void setSessionId(String sessionId) {
+	public void setSessionId(String sessionId) {
 		stringRedisTemplate.opsForHash().put(sessionId, "sessionId", sessionId);
 	}
 }

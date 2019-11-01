@@ -15,12 +15,16 @@ import cn.lijiahao.constant.JsonMessage;
 import cn.lijiahao.po.User;
 import cn.lijiahao.service.UserService;
 import cn.lijiahao.session.SessionManager;
+import cn.lijiahao.verificationCode.CodeVersion1;
 import cn.lijiahao.verificationCode.VerificationCode;
 
 @Controller
 public class BaseController {
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private SessionManager sessionManager;
 	@Autowired
 	private VerificationCode verificationCode;
 	
@@ -42,7 +46,7 @@ public class BaseController {
 		if(user.getPassword().equals(user.getPassword())) {
 			json.setMessage("登录成功");
 			json.setSuccess(true);
-			SessionManager.setSessionId(session.getId());
+			sessionManager.setSessionId(session.getId());//登录成功设置sessionId
 //			return "/admin/index";
 		}
 		json.addDatas("user",user);
@@ -80,6 +84,7 @@ public class BaseController {
 		JsonResult json = new JsonResult();
 		String sessionId = session.getId();
 		String code = verificationCode.getVerificationCode(sessionId);
+		json.addDatas("verificationCode", code);
 		return json;
 	}
 	

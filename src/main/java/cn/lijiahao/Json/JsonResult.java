@@ -10,10 +10,10 @@ import java.util.Map;
 public class JsonResult implements Serializable{
 	private static final long serialVersionUID = -5799876186305241574L;
 	
-	private Map<String, Object> datas = new HashMap<String, Object>();
-	private String message;
+	private Map<String, Object> datas = new HashMap<String, Object>(); // response datas
+	private String message; // error message
 	private boolean success = true;
-	private String code;
+	private String code; 
 	
 	public JsonResult() {
 		
