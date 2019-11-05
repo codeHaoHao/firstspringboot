@@ -85,6 +85,27 @@ public class BaseController {
 		String sessionId = session.getId();
 		String code = verificationCode.getVerificationCode(sessionId);
 		json.addDatas("verificationCode", code);
+		System.out.println(code);
+		return json;
+	}
+	/**
+	 * this request can do current limiting
+	 * this method can verify code if is right
+	 * @param session  we can get sessionId from this parameter
+	 * @param vCode  the code of verification
+	 * @return
+	 */
+	@RequestMapping(value = "/verifyCerificationCode", method = RequestMethod.POST)
+	@ResponseBody
+	public JsonResult verifyCerificationCode(HttpSession session, String vCode) {
+		JsonResult json = new JsonResult();
+		String sessionId = session.getId();
+		boolean success = verificationCode.verifyCode(sessionId, vCode);
+		if (success) {
+			json.setSuccess(true);
+		} else {
+			json.setSuccess(false);
+		}
 		return json;
 	}
 	

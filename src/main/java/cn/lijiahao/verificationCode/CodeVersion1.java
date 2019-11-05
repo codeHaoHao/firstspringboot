@@ -26,7 +26,7 @@ public class CodeVersion1 implements VerificationCode {
 	public String getVerificationCode(String sessionId) {
 		String code = genCaptcha(4);
 		String key = PREX + sessionId;
-		stringRedisTemplate.opsForSet().add(key, code);
+		stringRedisTemplate.opsForValue().set(key, code);
 		stringRedisTemplate.expire(key, EXPIRE_TIME, TimeUnit.MILLISECONDS);
 		return code;
 	}
@@ -34,7 +34,7 @@ public class CodeVersion1 implements VerificationCode {
 	@Override
 	public boolean verifyCode(String sessionId, String code) {
 		String verifyCode = stringRedisTemplate.opsForValue().get(PREX + sessionId);
-		if (code.equals(verifyCode)) {
+		if (code.equalsIgnoreCase(verifyCode)) {
 			return true;
 		}
 		return false;
