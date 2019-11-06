@@ -233,7 +233,7 @@ $('.container').find('input').eq(3).change(function() {
     }
 });
 
-// 手机号码
+// 邮箱
 var regPhoneNum = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 $('.container').find('input').eq(4).change(function() {
     if (regPhoneNum.test($(this).val())) {
@@ -243,11 +243,27 @@ $('.container').find('input').eq(4).change(function() {
     }
 });
 
-//短信验证码
+//邮箱验证码
 var regMsg = /111111/;
 $('.container').find('input').eq(5).change(function() {
     if (check[4]) {
-        if (regMsg.test($(this).val())) {
+    	var isRight = false;
+    	var data = {
+    			code:$("input[name='checkCode']").val()
+    	}
+    	$.ajax({
+    		url:"/verifyEmailCode",
+    		type:"POST",
+    		data:data,
+    		async:false,
+    		success:function(json){
+    			isRight = json.success;
+    		},
+    		error:function(){
+    			console.log("error")
+    		}
+    	})
+        if (isRight) {
             success($(this), 5);
         } else {
             fail($(this), 5, '短信验证码错误');

@@ -16,7 +16,7 @@ public class CodeVersion1 implements VerificationCode {
 			'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
 	private final static String PREX = "verificationCode:";
-	private final static long EXPIRE_TIME = 60000; // 1 minutes, 验证码在redis缓存中的过期时间
+	private final static long EXPIRE_TIME = 300000; // 5 minutes, 验证码在redis缓存中的过期时间
 
 	/**
 	 * 获取四位数的验证码
