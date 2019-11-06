@@ -2,6 +2,7 @@ package cn.lijiahao.controller;
 
 import javax.servlet.http.HttpSession;
 
+import cn.lijiahao.email.verificationCode.EmailVerificationCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,8 @@ public class BaseController {
 	private SessionManager sessionManager;
 	@Autowired
 	private VerificationCode verificationCode;
+	@Autowired
+	private EmailVerificationCode emailVerificationCode;
 	
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String login() {
@@ -120,6 +123,31 @@ public class BaseController {
 		JsonResult json = new JsonResult();
 		
 		return json;
+	}
+
+	/**
+	 * this request use to generate a email verification code, and send a email
+	 * @param session
+	 * @param email
+	 * @return
+	 */
+	@RequestMapping(value = "/generateEmailCode", method = RequestMethod.POST)
+	@ResponseBody
+	public JsonResult generateEmailCode(HttpSession session,String email){
+		JsonResult jsonResult = new JsonResult();
+		String	sessionId = session.getId();
+		emailVerificationCode.getEmailVerificationCode(sessionId,email);
+		return jsonResult;
+	}
+
+	@RequestMapping(value = "/verifyEmailCode", method = RequestMethod.POST)
+	@ResponseBody
+	public JsonResult verifyEmailCode(HttpSession session, String code){
+		JsonResult jsonResult = new JsonResult();
+		String sessionId = session.getId();
+		boolean isRight = emailVerificationCode.verifyCode(sessionId,code);
+		jsonResult.setSuccess(isRight);
+		return jsonResult;
 	}
 
 	

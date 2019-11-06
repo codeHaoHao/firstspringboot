@@ -234,12 +234,12 @@ $('.container').find('input').eq(3).change(function() {
 });
 
 // 手机号码
-var regPhoneNum = /^[0-9]{11}$/
+var regPhoneNum = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 $('.container').find('input').eq(4).change(function() {
     if (regPhoneNum.test($(this).val())) {
         success($(this), 4);
     } else {
-        fail($(this), 4, '手机号码只能为11位数字');
+        fail($(this), 4, '邮箱格式错误');
     }
 });
 
@@ -262,6 +262,21 @@ $('.container').find('input').eq(5).change(function() {
 $('#loadingButton').click(function() {
 
     if (check[4]) {
+            var data = {
+                email:$("input[name='phoneNum']").val()
+            }
+            $.ajax({
+            	url:"/generateEmailCode",
+            	type:"POST",
+            	async:true,
+            	data:data,
+            	success: function(json){
+
+            	},
+            	error:function(){
+            		console.log("an error appear")
+            	}
+            })
         $(this).removeClass('btn-primary').addClass('disabled');
 
         $(this).html('<span class="red">59</span> 秒后重新获取');
