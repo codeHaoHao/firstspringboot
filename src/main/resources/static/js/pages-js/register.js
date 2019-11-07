@@ -276,23 +276,22 @@ $('.container').find('input').eq(5).change(function() {
 
 
 $('#loadingButton').click(function() {
+    var data = {
+                    email:$("input[name='email']").val()
+                }
+                $.ajax({
+                	url:"/generateEmailCode",
+                	type:"POST",
+                	async:true,
+                	data:data,
+                	success: function(json){
 
+                	},
+                	error:function(){
+                		console.log("an error appear")
+                	}
+                })
     if (check[4]) {
-            var data = {
-                email:$("input[name='email']").val()
-            }
-            $.ajax({
-            	url:"/generateEmailCode",
-            	type:"POST",
-            	async:true,
-            	data:data,
-            	success: function(json){
-
-            	},
-            	error:function(){
-            		console.log("an error appear")
-            	}
-            })
         $(this).removeClass('btn-primary').addClass('disabled');
 
         $(this).html('<span class="red">59</span> 秒后重新获取');
@@ -322,36 +321,36 @@ $('#loadingButton').click(function() {
 })
 
 $('#submit').click(function(e) {
+    var success = true;
     if (!check.every(function(value) {
             return value == true
         })) {
-        e.preventDefault();
-        var success = true;
-        for (var key in check) {
+        success = false;
+        var key;
+        for (key in check) {
             if (!check[key]) {
                 $('.container').find('input').eq(key).parent().parent().removeClass('has-success').addClass('has-error');
                 success = false;
             }
         }
-//        if(success){
-//            var url = $(this).parents("form").attr("action");
-//            var data = $(this).parents("form").serialize();
-//            $.ajax({
-//               type:"POST",
-//               url: url,
-//               data: data,
-//               async: true,
-//               success:function(json){
-//                    if(json.success){
-//                        windows.location.href = "/login";
-//                    }else{
-//                        confirm(json.message);
-//                    }
-//               }
-//
-//
-//            })
-//        }
+    }
+    if(success){
+      var data = $(this).parents("form").serialize();
+      $.ajax({
+         type:"POST",
+         url: "/doRegister",
+         data: data,
+         async: true,
+         success:function(json){
+         if(json.success){
+            LjhDialog.confirm({message:"Register success, click to login."}).on(function(){
+                window.location.href = "/login";
+            })
+         }else{
+            LjhDialog.confirm({message:json.message})
+         }
+         }
+      })
     }
 });
 

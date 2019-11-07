@@ -64,7 +64,8 @@ public class BaseController {
     }
 
     @RequestMapping(value = "/doRegister", method = RequestMethod.POST)
-    public String doRegister(ModelMap model, HttpSession session, String username, String password, String email, String checkCode, String verificationCode,
+    @ResponseBody
+    public JsonResult doRegister(ModelMap model, HttpSession session, String username, String password, String email, String checkCode, String verificationCode,
                                  String passwordConfirm) {
         JsonResult json = new JsonResult();
         User user = new User();
@@ -74,19 +75,19 @@ public class BaseController {
         user.setEmail(email);
         if (userService.selectByUser(user) != null) {
             json.setMessage("Username already exists");
-            return "register";
+            return json;
         }
         if (!user.getPassword().equals(passwordConfirm)) {
             json.setMessage("The password entered twice does not match");
-            return "register";
+            return json;
         }
         if (!verificationCodeService.verifyCode(sessionId, verificationCode)) {
             json.setMessage("Wrong verification code");
-            return "register";
+            return json;
         }
         if (!emailVerificationCode.verifyCode(sessionId, checkCode)) {
             json.setMessage("Wrong email verification code");
-            return "register";
+            return json;
         }
         int id = -1;
         id = userService.add(user);
@@ -94,7 +95,7 @@ public class BaseController {
             json.setMessage("Register success");
             json.setSuccess(true);
         }
-        return "signin";
+        return json;
     }
 
     /**
