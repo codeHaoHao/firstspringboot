@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.lijiahao.dao.UserDao">
 	<sql id="attributes">
-	id,username,password,name,phoneNum,dataOfBirth,
+	id,username,password,name,phoneNum,email,dataOfBirth,
 	age,gender,salt,locked,avatar,individualResume
 	</sql>
 	<sql id="choose">
@@ -21,6 +21,9 @@
 			</when>
 			<when test="phoneNum!=null and phoneNum!=''">
 				and phoneNum = #{phoneNum}
+			</when>
+			<when test="email!=null and email!=''">
+				and email = #{email}
 			</when>
 			<when test="dataOfBirth!=null and dataOfBirth!=''">
 				and dataOfBirth = #{dataOfBirth}
@@ -52,6 +55,10 @@
 		where 1=1
 		<include refid="choose"/>
 	</select>
+	<insert id="add" keyProperty="id" useGeneratedKeys="true" parameterType="cn.lijiahao.po.User">
+		insert into sys_user(id,username,password,name,phoneNum,email,dataOfBirth,age,gender,salt,locked,avatar,individualResume)
+		values(#{id},#{username},#{password},#{name},#{phoneNum},#{email},#{dataOfBirth},#{age},#{gender},#{salt},#{locked},#{avatar},#{individualResume})
+	</insert>
 	<!-- <resultMap type="user" id="userType">
 		<id property="id" column="id" />
 		<result property="username" column="username" />

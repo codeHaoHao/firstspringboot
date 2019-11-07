@@ -6,8 +6,8 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
-@Component("VerificationCode")
-public class CodeVersion1 implements VerificationCode {
+@Component("VerificationCodeService")
+public class CodeServiceVersion1 implements VerificationCodeService {
 
 	@Autowired
 	private StringRedisTemplate stringRedisTemplate; // redis operation

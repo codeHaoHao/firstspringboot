@@ -1,6 +1,6 @@
 package cn.lijiahao.verificationCode;
 
-public interface VerificationCode {
+public interface VerificationCodeService {
 	String getVerificationCode(String sessionId);
 	boolean verifyCode(String sessionId, String code);
 }

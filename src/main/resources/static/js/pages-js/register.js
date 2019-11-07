@@ -211,7 +211,7 @@ $('.container').find('input').eq(3).change(function() {
     	vCode:$("input[name='verificationCode']").val()
     };
     $.ajax({
-    	url:"/verifyCerificationCode",
+    	url:"/verifyVerificationCode",
     	type:"POST",
     	async:false,
     	data:data,
@@ -266,7 +266,7 @@ $('.container').find('input').eq(5).change(function() {
         if (isRight) {
             success($(this), 5);
         } else {
-            fail($(this), 5, '短信验证码错误');
+            fail($(this), 5, '邮箱验证码错误');
         }
     } else {
         $('.container').find('input').eq(4).parent().parent().removeClass('has-success').addClass('has-error');
@@ -279,7 +279,7 @@ $('#loadingButton').click(function() {
 
     if (check[4]) {
             var data = {
-                email:$("input[name='phoneNum']").val()
+                email:$("input[name='email']").val()
             }
             $.ajax({
             	url:"/generateEmailCode",
@@ -326,11 +326,32 @@ $('#submit').click(function(e) {
             return value == true
         })) {
         e.preventDefault();
-        for (key in check) {
+        var success = true;
+        for (var key in check) {
             if (!check[key]) {
-                $('.container').find('input').eq(key).parent().parent().removeClass('has-success').addClass('has-error')
+                $('.container').find('input').eq(key).parent().parent().removeClass('has-success').addClass('has-error');
+                success = false;
             }
         }
+//        if(success){
+//            var url = $(this).parents("form").attr("action");
+//            var data = $(this).parents("form").serialize();
+//            $.ajax({
+//               type:"POST",
+//               url: url,
+//               data: data,
+//               async: true,
+//               success:function(json){
+//                    if(json.success){
+//                        windows.location.href = "/login";
+//                    }else{
+//                        confirm(json.message);
+//                    }
+//               }
+//
+//
+//            })
+//        }
     }
 });
 
