@@ -186,5 +186,25 @@ public class BaseController {
         return jsonResult;
     }
 
+    /**
+     * check username if exists
+     * @param username
+     * @return
+     */
+    @RequestMapping(value = "/checkUsername", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonResult checkUsername(String username){
+        JsonResult jsonResult = new JsonResult();
+        User user = new User();
+        user.setUsername(username);
+        jsonResult.setSuccess(true);
+        User resultUser = userService.selectByUser(user);
+        if (resultUser!=null){
+            userService.get(resultUser.getId());
+            jsonResult.setSuccess(false);
+        }
+        return jsonResult;
+    }
+
 
 }

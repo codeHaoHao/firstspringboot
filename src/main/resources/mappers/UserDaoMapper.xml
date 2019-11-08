@@ -55,6 +55,13 @@
 		where 1=1
 		<include refid="choose"/>
 	</select>
+	<select id="get" resultType="cn.lijiahao.po.User" parameterType="Integer">
+		select
+		<include refid="attributes"/>
+		from sys_user
+		where 1=1
+		and id = #{id}
+	</select>
 	<insert id="add" keyProperty="id" useGeneratedKeys="true" parameterType="cn.lijiahao.po.User">
 		insert into sys_user(id,username,password,name,phoneNum,email,dataOfBirth,age,gender,salt,locked,avatar,individualResume)
 		values(#{id},#{username},#{password},#{name},#{phoneNum},#{email},#{dataOfBirth},#{age},#{gender},#{salt},#{locked},#{avatar},#{individualResume})

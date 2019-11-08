@@ -1,7 +1,5 @@
 package cn.lijiahao.po;
 
-import java.sql.Timestamp;
-
 public class User extends BaseBean {
     private static final long serialVersionUID = 127255423655316392L;
 
@@ -11,7 +9,7 @@ public class User extends BaseBean {
     private String name;
     private String phoneNum;
     private String email;
-    private Timestamp dataOfBirth;
+    private long dataOfBirth;
     private int age;
     private char gender;
     private String salt;//盐加密
@@ -24,7 +22,7 @@ public class User extends BaseBean {
         super();
     }
 
-    public User(int id, String username, String password, String name, String phoneNum, String email, Timestamp dataOfBirth, int age,
+    public User(int id, String username, String password, String name, String phoneNum, String email, long dataOfBirth, int age,
                 char gender, String salt, char locked, String avatar, String individualResume) {
         super();
         this.id = id;
@@ -74,11 +72,11 @@ public class User extends BaseBean {
         this.name = name;
     }
 
-    public Timestamp getDataOfBirth() {
+    public long getDataOfBirth() {
         return dataOfBirth;
     }
 
-    public void setDataOfBirth(Timestamp dataOfBirth) {
+    public void setDataOfBirth(long dataOfBirth) {
         this.dataOfBirth = dataOfBirth;
     }
 

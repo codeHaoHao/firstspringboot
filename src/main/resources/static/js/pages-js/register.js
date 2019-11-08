@@ -160,7 +160,25 @@ function fail(Obj, counter, msg) {
 $('.container').find('input').eq(0).change(function() {
 
 	if (regUsername.test($(this).val())) {
-		success($(this), 0);
+		var checkUsername = false;
+		$.ajax({
+		    type:"POST",
+		    url:"/checkUsername",
+		    async:false,
+		    data:{username:$(this).val()},
+		    success:function(json){
+		        if(json.success){
+		            checkUsername = true;
+		        }
+		    }
+
+		})
+		if(checkUsername){
+            success($(this), 0);
+		}else{
+            fail($(this),0,'用户名已存在');
+		}
+
 	} else if ($(this).val().length < 5) {
 		fail($(this), 0, '用户名太短，不能少于5个字符');
 	} else {
