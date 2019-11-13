@@ -45,6 +45,7 @@ public class BaseController {
         User user = userService.selectByUser(selectUser);
         if (user == null) {
             json.setMessage(JsonMessage.USERNAME_IS_NOT_EXIST);
+            return;
 //			return "/login";
         }
 //		user.getPassword().equals(Md5Utils.encrypt(password, user.getSalt()))
@@ -52,10 +53,12 @@ public class BaseController {
             json.setMessage("登录成功");
             json.setSuccess(true);
             sessionManager.setSessionId(session.getId());//登录成功设置sessionId
+            return ;
 //			return "/admin/index";
         }
         json.addDatas("user", user);
 //		return "/admin/index";
+        return ;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
