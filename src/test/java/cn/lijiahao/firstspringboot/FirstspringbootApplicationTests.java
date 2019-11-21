@@ -15,6 +15,7 @@ public class FirstspringbootApplicationTests {
 	public void contextLoads() {
 		System.out.println("1024  MD5:   "+Md5Utils.encrypt("1024", "1024"));
 		System.out.println("test");
+		// test
 	}
 
 }
