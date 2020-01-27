@@ -38,27 +38,32 @@ public class BaseController {
     }
 
     @RequestMapping(value = "/sigin", method = RequestMethod.POST)
-    public void sigin(ModelMap model, String username, String password, HttpSession session) {
+    @ResponseBody
+    public JsonResult sigin(ModelMap model, String username, String password, HttpSession session) {
         JsonResult json = new JsonResult();
         User selectUser = new User();
-        selectUser.setUsername(username);
+//        selectUser.setUsername(username);
+        selectUser.setEmail(username);
         User user = userService.selectByUser(selectUser);
         if (user == null) {
             json.setMessage(JsonMessage.USERNAME_IS_NOT_EXIST);
-            return;
+            return json;
 //			return "/login";
         }
 //		user.getPassword().equals(Md5Utils.encrypt(password, user.getSalt()))
-        if (user.getPassword().equals(user.getPassword())) {
-            json.setMessage("登录成功");
-            json.setSuccess(true);
-            sessionManager.setSessionId(session.getId());//登录成功设置sessionId
-            return ;
+        if (!user.getPassword().equals(password)) {
+            json.setMessage("密码错误");
+            json.setStatus(JsonResult.JsonResultEmum.ERROR);
+            return json;
 //			return "/admin/index";
+        } else {
+            json.setMessage("登录成功");
+            json.setStatus(JsonResult.JsonResultEmum.SUCCESS);
+            sessionManager.setSessionId(session.getId());//登录成功设置sessionId
         }
         json.addDatas("user", user);
 //		return "/admin/index";
-        return ;
+        return json;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -84,6 +89,15 @@ public class BaseController {
             json.setMessage("The password entered twice does not match");
             return json;
         }
+
+        User userEmail = new User();
+        userEmail.setEmail(email);
+        if (userService.selectByUser(userEmail) != null){
+            json.setStatus(JsonResult.JsonResultEmum.ERROR);
+            json.setMessage("Email is already in use");
+            return json;
+        }
+
         if (!verificationCodeService.verifyCode(sessionId, verificationCode)) {
             json.setMessage("Wrong verification code");
             return json;

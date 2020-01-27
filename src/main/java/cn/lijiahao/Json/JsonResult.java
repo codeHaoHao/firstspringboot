@@ -11,11 +11,27 @@ import java.util.Map;
  * @author franky
  */
 public class JsonResult implements Serializable {
+    public enum JsonResultEmum {
+        SUCCESS(1,"success"),ERROR(0,"error");
+
+        int id;
+        String status;
+
+       JsonResultEmum(int id, String status){
+            this.id = id;
+            this.status = status;
+       }
+
+       public String status(){
+           return this.status;
+       }
+    }
     private static final long serialVersionUID = -5799876186305241574L;
 
     private Map<String, Object> datas = new HashMap<String, Object>(); // response datas
     private String message; // error message
-    private boolean success = false;
+    private JsonResultEmum status = JsonResultEmum.SUCCESS;
+    private boolean success = true;
     private String code;
 
     public JsonResult() {
@@ -46,16 +62,24 @@ public class JsonResult implements Serializable {
         this.message = message;
     }
 
+    public void setStatus(JsonResultEmum status){
+        this.status = status;
+    }
+
+    public String getStatus(){
+        return status.status();
+    }
+
+    public String getCode() {
+        return code;
+    }
+
     public boolean isSuccess() {
         return success;
     }
 
     public void setSuccess(boolean success) {
         this.success = success;
-    }
-
-    public String getCode() {
-        return code;
     }
 
     public void setCode(String code) {
