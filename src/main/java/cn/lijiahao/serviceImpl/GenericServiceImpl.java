@@ -3,6 +3,7 @@ package cn.lijiahao.serviceImpl;
 import cn.lijiahao.dao.Dao;
 import cn.lijiahao.dao.cache.Cache;
 import cn.lijiahao.po.BaseBean;
+
 import org.springframework.beans.factory.InitializingBean;
 
 public abstract class GenericServiceImpl<T extends BaseBean> implements InitializingBean {
@@ -23,6 +24,10 @@ public abstract class GenericServiceImpl<T extends BaseBean> implements Initiali
         }
         return t;
     }
+    
+	public void setCache(T t) {
+		cache.set(t);
+	}
 
     public int remove(int id){
         int r = dao.remove(id);

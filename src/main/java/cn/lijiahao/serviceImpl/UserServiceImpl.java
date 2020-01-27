@@ -53,5 +53,4 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
         return userDao.add(user);
     }
 
-
 }

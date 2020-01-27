@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+
+import cn.lijiahao.session.SessionManager;
 /**
  * 基础拦截器，该拦截器主要用于管理sessionId
  * @author franky
@@ -17,6 +19,9 @@ public class BaseInterceptor implements HandlerInterceptor{
 	@Autowired
 	private StringRedisTemplate stringRedisTemplate;
 	
+	@Autowired
+	private SessionManager sessionManager;
+	
 	
 	
 	@Override
@@ -24,9 +29,9 @@ public class BaseInterceptor implements HandlerInterceptor{
 			throws Exception {
 		String sessionId = request.getSession().getId();
 		System.out.println(sessionId);
-		if (stringRedisTemplate.opsForHash().get(sessionId, "sessionId") != null
-				&& stringRedisTemplate.opsForHash().get(sessionId, "sessionId").equals(sessionId)) {
-			
+		if (sessionManager.getSessionId(sessionId) != null
+				&& sessionManager.getSessionId(sessionId).equals(sessionId)) {
+			System.out.println("userId"+sessionManager.getSession(sessionId).getUserId());
 			return true;
 		}else {
 			response.sendRedirect(request.getContextPath()+"/login");

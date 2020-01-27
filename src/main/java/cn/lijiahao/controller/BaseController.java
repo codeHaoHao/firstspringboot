@@ -39,32 +39,32 @@ public class BaseController {
 
     @RequestMapping(value = "/sigin", method = RequestMethod.POST)
     @ResponseBody
-    public JsonResult sigin(ModelMap model, String username, String password, HttpSession session) {
-        JsonResult json = new JsonResult();
-        User selectUser = new User();
+	public JsonResult sigin(ModelMap model, String username, String password, HttpSession session) {
+		JsonResult json = new JsonResult();
+		User selectUser = new User();
 //        selectUser.setUsername(username);
-        selectUser.setEmail(username);
-        User user = userService.selectByUser(selectUser);
-        if (user == null) {
-            json.setMessage(JsonMessage.USERNAME_IS_NOT_EXIST);
-            return json;
+		selectUser.setEmail(username);
+		User user = userService.selectByUser(selectUser);
+		if (user == null) {
+			json.setMessage(JsonMessage.USERNAME_IS_NOT_EXIST);
+			return json;
 //			return "/login";
-        }
+		}
 //		user.getPassword().equals(Md5Utils.encrypt(password, user.getSalt()))
-        if (!user.getPassword().equals(password)) {
-            json.setMessage("密码错误");
-            json.setStatus(JsonResult.JsonResultEmum.ERROR);
-            return json;
+		if (!user.getPassword().equals(password)) {
+			json.setMessage("密码错误");
+			json.setStatus(JsonResult.JsonResultEmum.ERROR);
+			return json;
 //			return "/admin/index";
-        } else {
-            json.setMessage("登录成功");
-            json.setStatus(JsonResult.JsonResultEmum.SUCCESS);
-            sessionManager.setSessionId(session.getId());//登录成功设置sessionId
-        }
-        json.addDatas("user", user);
+		} else {
+			json.setMessage("登录成功");
+			json.setStatus(JsonResult.JsonResultEmum.SUCCESS);
+			sessionManager.setLoginInfor(session.getId(), user);
+		}
+		json.addDatas("user", user);
 //		return "/admin/index";
-        return json;
-    }
+		return json;
+	}
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String register() {
