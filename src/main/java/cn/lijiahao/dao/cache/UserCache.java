@@ -82,42 +82,6 @@ public class UserCache implements Cache<User> {
     }
 
     @Override
-    public void update(User bean) {
-        if (bean.getId() == -1) {
-            return;
-        }
-        String key = PREX + bean.getId();
-        stringRedisTemplate.multi();
-        if (bean.getUsername() != null && !bean.getUsername().isEmpty()) {
-            stringRedisTemplate.opsForHash().put(key, "username", bean.getUsername());
-        } else if (bean.getPassword() != null && !bean.getPassword().isEmpty()) {
-            stringRedisTemplate.opsForHash().put(key, "password", bean.getPassword());
-        } else if (bean.getName() != null && !bean.getName().isEmpty()) {
-            stringRedisTemplate.opsForHash().put(key, "name", bean.getName());
-        } else if (bean.getPhoneNum() != null && !bean.getPhoneNum().isEmpty()) {
-            stringRedisTemplate.opsForHash().put(key, "phoneNum", bean.getPhoneNum());
-        } else if (bean.getEmail() != null && !bean.getEmail().isEmpty()) {
-            stringRedisTemplate.opsForHash().put(key, "email", bean.getEmail());
-        } else if (bean.getDataOfBirth() > 0) {
-            stringRedisTemplate.opsForHash().put(key, "dataOfBirth", bean.getDataOfBirth());
-        } else if (bean.getAge() > 0) {
-            stringRedisTemplate.opsForHash().put(key, "age", bean.getAge());
-        } else if (bean.getGender() == 0 || bean.getGender() == 1) {
-            stringRedisTemplate.opsForHash().put(key, "gender", bean.getGender());
-        } else if (bean.getSalt() != null && !bean.getSalt().isEmpty()) {
-            stringRedisTemplate.opsForHash().put(key, "salt", bean.getSalt());
-        } else if (bean.getLocked() == 0 || bean.getLocked() == 1) {
-            stringRedisTemplate.opsForHash().put(key, "locked", bean.getLocked());
-        } else if (bean.getAvatar() != null && !bean.getAvatar().isEmpty()) {
-            stringRedisTemplate.opsForHash().put(key, "avatar", bean.getAvatar());
-        } else if (bean.getIndividualResume() != null && !bean.getIndividualResume().isEmpty()) {
-            stringRedisTemplate.opsForHash().put(key, "individualResume", bean.getIndividualResume());
-        }
-        stringRedisTemplate.exec();
-
-    }
-
-    @Override
     public void remove(int id) {
         String key = PREX + id;
         stringRedisTemplate.delete(key);

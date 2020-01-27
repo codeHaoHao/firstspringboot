@@ -1,19 +1,19 @@
-package cn.lijiahao.interceptor;
+package cn.lijiahao.config;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.io.FileUtils;
+import cn.lijiahao.interceptor.BaseInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
 @Configuration
 public class SpringMVCConfig extends WebMvcConfigurationSupport{
 	@Autowired
@@ -38,9 +38,9 @@ public class SpringMVCConfig extends WebMvcConfigurationSupport{
 	 */
 	private void initExcludePathPatterns() {
 		ClassPathResource classPathResource = new ClassPathResource("springmvc-interceptor.properties");
-		try(BufferedReader bfreader =  new BufferedReader(new InputStreamReader(classPathResource.getInputStream()));) {
+		try(BufferedReader bfreader =  new BufferedReader(new InputStreamReader(classPathResource.getInputStream()))) {
 
-			String tempContent = null;
+			String tempContent;
 			while ((tempContent = bfreader.readLine())!= null){
 				if (tempContent.startsWith("###")){
 					continue;
@@ -55,15 +55,5 @@ public class SpringMVCConfig extends WebMvcConfigurationSupport{
 			e.printStackTrace();
 		}
 	}
-	
-	private void initList() {
-		for(int i=0;i<excluPathPatterns.size();i++) {
-			if(excluPathPatterns.get(i).startsWith("###")) {
-				excluPathPatterns.remove(i);
-			}
-			if(excluPathPatterns.get(i).equals("excluPathPatterns:")) {
-				excluPathPatterns.remove(i);
-			}
-		}
-	}
+
 }

@@ -9,6 +9,10 @@ import org.springframework.stereotype.Component;
 
 /**
  * 用来管理session
+ * hash结构存储session信息
+ * key ：    session:sessionId
+ * value : 		session:4564648454456465
+ * 				useId:4546
  */
 @Component
 public class SessionManager {

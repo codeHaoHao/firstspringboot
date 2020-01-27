@@ -15,9 +15,9 @@ public abstract class GenericServiceImpl<T extends BaseBean> implements Initiali
      */
     public abstract void  afterPropertiesSet() throws Exception;
 
-    public T get(int id){
+    public T get(int id) {
         T t = cache.get(id);
-        if (t==null){
+        if (t == null) {
             t = dao.get(id);
             cache.set(t);
         }
