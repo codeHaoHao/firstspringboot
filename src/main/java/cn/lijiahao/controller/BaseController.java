@@ -37,7 +37,7 @@ public class BaseController {
         return "signin";
     }
 
-    @RequestMapping(value = "/sigin", method = RequestMethod.POST)
+    @RequestMapping(value = "/sigin")
     @ResponseBody
 	public JsonResult sigin(ModelMap model, String username, String password, HttpSession session) {
 		JsonResult json = new JsonResult();
