@@ -1,11 +1,16 @@
 package cn.lijiahao.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cn.lijiahao.email.verificationCode.EmailVerificationCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,9 +42,11 @@ public class BaseController {
         return "signin";
     }
 
-    @RequestMapping(value = "/sigin")
-    @ResponseBody
-	public JsonResult sigin(ModelMap model, String username, String password, HttpSession session) {
+	@RequestMapping(value = "/sigin")
+	@ResponseBody
+	public JsonResult sigin(ModelMap model, String username, String password, HttpSession session,
+			@CookieValue(value = "sid", defaultValue = "") String sid, HttpServletRequest request,
+			HttpServletResponse response) {
 		JsonResult json = new JsonResult();
 		User selectUser = new User();
 //        selectUser.setUsername(username);
@@ -48,21 +55,38 @@ public class BaseController {
 		if (user == null) {
 			json.setMessage(JsonMessage.USERNAME_IS_NOT_EXIST);
 			return json;
-//			return "/login";
 		}
 //		user.getPassword().equals(Md5Utils.encrypt(password, user.getSalt()))
 		if (!user.getPassword().equals(password)) {
 			json.setMessage("密码错误");
 			json.setStatus(JsonResult.JsonResultEmum.ERROR);
 			return json;
-//			return "/admin/index";
 		} else {
+			boolean isRememberMe = request.getParameter("remember_me") != null;
+			if (isRememberMe) {
+				Cookie cookie = new Cookie("sid", session.getId());
+				cookie.setHttpOnly(true);
+				cookie.setMaxAge(60 * 60 * 24 * 5);
+				response.addCookie(cookie);
+			}
+			sessionManager.setLoginInfor(session.getId(), user, isRememberMe);
 			json.setMessage("登录成功");
 			json.setStatus(JsonResult.JsonResultEmum.SUCCESS);
-			sessionManager.setLoginInfor(session.getId(), user);
 		}
 		json.addDatas("user", user);
-//		return "/admin/index";
+		return json;
+	}
+	
+	@RequestMapping(value = "/getSessionMessage")
+	@ResponseBody
+	public JsonResult getSessionMessage(HttpSession session) {
+		JsonResult json = new JsonResult();
+		if(sessionManager.getSessionId(session.getId())!=null) {
+			json.addDatas("session", sessionManager.getSession(session.getId()));
+		} else {
+			json.setMessage("please sigin first");
+		}
+		
 		return json;
 	}
 

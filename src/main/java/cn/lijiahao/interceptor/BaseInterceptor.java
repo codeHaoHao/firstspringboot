@@ -1,5 +1,6 @@
 package cn.lijiahao.interceptor;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,11 +32,31 @@ public class BaseInterceptor implements HandlerInterceptor{
 		System.out.println(sessionId);
 		if (sessionManager.getSessionId(sessionId) != null
 				&& sessionManager.getSessionId(sessionId).equals(sessionId)) {
-			System.out.println("userId"+sessionManager.getSession(sessionId).getUserId());
+			System.out.println("userId" + sessionManager.getSession(sessionId).getUserId());
 			return true;
-		}else {
-			response.sendRedirect(request.getContextPath()+"/login");
+		} else {
+			String sid = rememberMe(request, response);
+			if (sid != null) {
+				if (sessionManager.getSession(sid) != null) {
+					sessionManager.setSession(sessionId, sessionManager.getSession(sid));
+					return true;
+				}
+			}
+			
+			response.sendRedirect(request.getContextPath() + "/login");
 			return true;
 		}
 	}
+	
+	private String rememberMe(HttpServletRequest request, HttpServletResponse response) {
+		Cookie[] cookies = request.getCookies();
+		for (int i = 0; i < cookies.length; i++) {
+			Cookie cookie = cookies[i];
+			if (cookie.getName().equals("sid")) {
+				return cookie.getValue();
+			}
+		}
+		return null;
+	}
+	
 }
