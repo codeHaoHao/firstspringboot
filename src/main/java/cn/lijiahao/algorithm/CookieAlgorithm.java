@@ -7,6 +7,7 @@ public class CookieAlgorithm implements Algorithm{
 
 	@Override
 	public String encry(String content) {
+		
 		return null;
 	}
 
